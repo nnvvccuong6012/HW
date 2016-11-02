@@ -1,0 +1,137 @@
+roduct Categories
+
+GPSP: General Purpose Standard Product
+MCU: Micro Controlling Unit (CPU + Peripherals + Memory)
+MPU: Micro Processing Unit (High-performance CPU)
+Discretes
+Standard IC
+Memory
+ASSP: Application Specific Standard Product
+ASCP: Application Specific Custom Product
+ASIC: Application Specific Integrated Circuit, or
+SoC: System on Chip
+SiP: System in Package
+
+Design Input and Design Output
+
+ To minimize retrogression, Input and Output of each design step must be clearly defined: key in ISO9001
+ Input and Output are design interfaces, and must be well documented
+ If Input is unclear, confirm with person in charge of upper stream design step
+ Before releasing Output verify it and investigate it by design review
+ Modification or addition to Input must be clearly stated in Output with reason for existence
+ Modifications to existing design and newly added design must be clearly designated in Output with reason for existence
+
+Well Organized Document
+
+To be fully conscious of readers: like instructing them
+To make design interfaces clear: design input, and design output
+To make 5W1H clear (who, what, when, where, why, how)
+To make document systematic, and avoid distributed description by organizing your thoughts
+To avoid ambiguous expression: no room for arbitrary interpretation by readers
+Not to abuse alteration, and to make revision history and distribution history clear
+
+Total LSI Design Flow
+
+To design LSIs using design environment established by platform development
+- Quality of the platform determines quality of all products
+
+Platform Development Flow
+ System spec --> System design --> Logic design --> Test design --> Layout design --> Mask making
+ 
+ slide 41
+ 
+ device design 
+ 
+ process condition, mask specifications --> device verification --> preliminary process --> TEG design 
+ --> TEG evaluation --> Finalized process --> design enviroment --> circuit design 
+ (TEG = Test Element Group)
+ 
+ Circuit design
+ 
+ circuit design --> Circuit varification --> Design layout/varification --> Post-layout circuit verification --> Library design
+ 
+ Library design flow
+ 
+ Standard cell specifications
+  circuit design --> Creation of front-end models --> Creation of back-end models --> verification of models
+  
+  //slide 61
+  
+  slide 65: system design
+  Investigation of spec --> Architecture definition --> Evaluation
+  
+  slide 67: System design trend
+  Conventional design: * Inspration and experience
+                       * Excess margin due to paper plans
+  Current trend:       * C/System C based design
+                       * Co-simulation
+                       * Early prototype [Logic bench]
+                       * Emulator [Celaro]
+                       
+ Slide 70: Logic design 
+ System design --> RTL design --> RTL verification --> Logic synthesis --> pre. Timing verification --> Test design
+ 
+ slide 82: Timing verification
+ 
+ STA: Static Timing Analysis
+• Structure of gate-level logic description is analyzed and then compared
+with timing constraints
+• Test patterns are not required
+• Synchronous paths can be 100% verified
+• Asynchronous logic and other special circuit cannot be analyzed
+• Special paths must be specified manually
+
+DTA: Dynamic Timing Analysis
+• Logic simulation handling delay timing is executed
+• Verification of all paths is unrealistic because huge test patterns are required
+
+-> Verify synchronous paths with STA, and use DTA for limited paths that cannot be checked by STA. Always do synchronous
+design except for unavoidable case!
+
+//slide 84???
+
+slide 98: layout design
+test design --> floor planning 2 --> layout (P&R) --> timing verification --> logic verification --> signal integrity check
+--> layout verification --> mask data generation
+
+slide 104: signal integrity
+
+In LSI design adopting nanometer technologies, preservingsignal integrity and its verification become indispensable
+Signal Integrity is classified:
+1) IR drop and ground bounce
+Voltage across parasitic resistors reduces power supply voltage and raises ground voltage at each transistor.
+These bring about malfunction or timing delay increase at each gate.
+2) Cross Talk (X-talk)
+Noise between multiple signal lines brings about malfunction or timing delay increase at each gate.
+3) Electro Migration (EM)
+Excessive, repeated electric current damages wiring (wiring stress).
+4) Hot Carrier (HC)
+Excessively energized electrons damage transistor (Trs. stress).
+
+slide 117: layout verification
+
+DRC and LVS are the two major tools for layout verification.
+<DRC: Design Rule Check>
+<LVS: Layout Vs Schemathic Check>
+- Check width, space, and overlap of patterns among several layout layers according to layout rules.
+- In case of any violations, correct layout and check again. Repeat this process until no violation is reported at all.
+<LVS: Layout Vs Schemathic Check>
+- Check whether layout corresponds to reference, i.e. circuit diagram (netlist).
+- In case of inconsistency, correct layout and check again. Repeat this process until inconsistency is solved.
+
+slide 119: LSI Product Troubles and Designs
+
+- Functional errors
+• deterministic fault --> to be avoided by logic verification
+• intermittent fault --> to be avoided by logic and timing verification
+- Marginal problems
+• heat, low power supply voltage --> to be avoided by circuit simulation
+• noise --> to be avoided by circuit simulation
+- Fabrication problems
+• screening of defective devices --> to be solved by DFT (Design For Test)
+- Fluctuation of fabrication conditions
+• yield problem --> to be solved by DFM
+(Design For Manufacturing)
+- Aged deterioration
+• hot carrier --> to be avoided by signal integrity check
+• electro migration --> be avoided by signal integrity check
